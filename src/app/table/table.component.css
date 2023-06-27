@@ -1,0 +1,12 @@
+table {
+    width: 100%;
+}
+
+.mat-cell,
+.mat-header-cell {
+    padding: 8px;
+}
+
+.mat-row:hover {
+    background-color: #ccc;
+}

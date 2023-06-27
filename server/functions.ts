@@ -7,20 +7,20 @@ const dbName = 'cash';
 const dbTxn = 'transactions';
 const dbUser = 'users';
 
-interface transactions {
-  _id: ObjectId;
+export interface Transactions {
+  _id: number;
   txn_date: Date;
   txn_month: string;
   txn_type: string;
   status: string;
-  base_amount: Double;
-  tax: Double;
+  base_amount: Double | number;
+  tax: Double | number;
   sender_id: number;
   receiver_id: number;
   payment_mode: string;
 }
 
-interface users {
+export interface Users {
   uid: number;
   first_name: string;
   last_name: string;
@@ -35,14 +35,14 @@ interface users {
 export async function connectDBTxn() {
   await client.connect();
   const db = client.db(dbName);
-  const collection = db.collection<transactions>(dbTxn);
+  const collection = db.collection<Transactions>(dbTxn);
   return collection;
 }
 
 export async function connectDBUser() {
   await client.connect();
   const db = client.db(dbName);
-  const collection = db.collection<users>(dbUser);
+  const collection = db.collection<Users>(dbUser);
   return collection;
 }
 

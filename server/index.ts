@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import { connectDBTxn, connectDBUser, closeDB } from './functions';
 
@@ -8,6 +9,17 @@ const app: Express = express();
 
 const port = process.env.PORT || 5000;
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:4200',
+  'http://localhost:5000',
+];
+
+const options: cors.CorsOptions = {
+  origin: allowedOrigins,
+};
+
+app.use(cors(options));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
