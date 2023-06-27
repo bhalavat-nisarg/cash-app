@@ -1,0 +1,21 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+.mat-toolbar button.mat-button {
+    margin-left: 10px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.mat-toolbar button.mat-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.mat-toolbar button.mat-button:focus {
+    outline: none;
+}

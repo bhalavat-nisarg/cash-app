@@ -1,0 +1,6 @@
+tid,txn_date,txn_month,txn_type,status,base_amount,tax,sender_id,receiver_id,payment_mode
+1,06/27/2023,JUN,Rent,Paid,1500.00,0.00,1,0,ACH
+2,06/27/2023,JUN,Utilities,Paid,150.00,0.00,1,0,ACH
+3,06/27/2023,JUN,Maintenance,Unpaid,150.00,0.00,1,0,ACH
+4,06/27/2023,JUN,Electricity,Paid,100.00,0.00,1,0,ACH
+5,06/27/2023,JUN,WiFi,Unpaid,50.00,0.00,1,0,ACH
