@@ -91,26 +91,27 @@ export class TableComponent implements AfterViewInit, OnInit {
   // ];
 
   transactions: Transactions[] = [];
+  updatedValue: string = '';
+
+  async ngOnInit(): Promise<void> {
+    await this.fetchTransactions();
+    console.log(this.transactions);
+  }
+
+  dataSource = new MatTableDataSource<Transactions>(this.transactions);
 
   // Set to store row indexes in edit mode
   editableRows: Set<number> = new Set<number>();
   transactionForm: FormGroup;
 
-  dataSource = new MatTableDataSource<Transactions>(this.transactions);
-
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder) {
     this.transactionForm = this.formBuilder.group({
-      status: ['', Validators.required],
+      status: ['', Validators.required, Validators.pattern(/^(Paid|Unpaid)$/)],
     });
   }
 
   @ViewChild(MatPaginator, { static: true })
   paginator: any = MatPaginator;
-
-  async ngOnInit(): Promise<void> {
-    await this.fetchTransactions();
-    console.log();
-  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -124,6 +125,7 @@ export class TableComponent implements AfterViewInit, OnInit {
       })
       .catch((error) => {
         console.log('Error fetching transactions:', error);
+        alert('Error fetching transactions!');
       });
   }
 
@@ -132,24 +134,47 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   toggleRowEdit(row: Transactions): void {
-    if (this.isRowEditable(row)) {
-      this.editableRows.delete(row._id);
-    } else {
+    if (!this.isRowEditable(row)) {
       this.editableRows.add(row._id);
+    } else {
+      this.editableRows.delete(row._id);
     }
   }
 
+  onSelectionChange($event: any): void {
+    this.updatedValue = $event.value;
+  }
+
   saveRowEdit(row: Transactions): void {
-    if (this.transactionForm.get('status')!.valid) {
+    if (row.status != this.updatedValue && this.updatedValue != '') {
       console.log('Saving edited transaction:', row);
+      const rowIndex = this.transactions.findIndex(
+        (transaction) => transaction._id === row._id
+      );
+
+      if (rowIndex !== -1) {
+        this.transactions[rowIndex].status = this.updatedValue;
+      }
       this.toggleRowEdit(row);
       this.transactionForm.reset();
+      console.log(row);
+      this.updateServerRecord(rowIndex, row._id);
     } else {
-      console.log('Invalid status. Transaction canceled:', row);
+      console.log('No change.');
+      this.toggleRowEdit(row);
+      this.transactionForm.reset();
     }
   }
 
   cancelRowEdit(row: Transactions): void {
     this.toggleRowEdit(row);
+  }
+
+  async updateServerRecord(rowIndex: number, rowId: number): Promise<void> {
+    const result = await axios.put(
+      'http://localhost:5000/transactions/' + rowId,
+      this.transactions[rowIndex]
+    );
+    console.log(result);
   }
 }

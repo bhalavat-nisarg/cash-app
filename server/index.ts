@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { connectDBTxn, connectDBUser, closeDB } from './functions';
+import { ObjectId } from 'mongodb';
 
 dotenv.config();
 
@@ -22,6 +23,21 @@ const options: cors.CorsOptions = {
 app.use(cors(options));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+app.put('/api/transactions/:_id', async (req: Request, res: Response) => {
+  const _id: any = req.params._id;
+  const status = req.body.status;
+  // console.log(_id);
+  console.log(req.body.status);
+  const connection = await connectDBTxn();
+  const result = await connection.findOne(
+    { _id }
+    // { $set: { status: status } }
+  );
+  console.log(result);
+
+  res.status(200).send(_id);
+});
 
 app.get('/api/transactions', async (req: Request, res: Response) => {
   const transactions = await connectDBTxn();

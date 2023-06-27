@@ -1,10 +1,10 @@
 <div class="container" style="padding: 20px">
   <h2 class="mat-h2">Transactions</h2>
 
-  <table mat-table [dataSource]="dataSource">
+  <table mat-table [dataSource]="transactions">
     <ng-container matColumnDef="tid">
       <th mat-header-cell *matHeaderCellDef>Sr. No</th>
-      <td mat-cell *matCellDef="let row">{{ row._id }}</td>
+      <td mat-cell *matCellDef="let row">{{ row._id | slice : -3 }}</td>
     </ng-container>
 
     <ng-container matColumnDef="txn_type">
@@ -54,9 +54,13 @@
       <th mat-header-cell *matHeaderCellDef>Status</th>
       <td mat-cell *matCellDef="let row">
         <ng-container *ngIf="isRowEditable(row); else viewMode">
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="form-field">
             <mat-label>Status</mat-label>
-            <mat-select formControlName="status">
+            <mat-select
+              formControlName="status"
+              [value]="row.status"
+              (selectionChange)="onSelectionChange($event)"
+            >
               <mat-option value="Paid">Paid</mat-option>
               <mat-option value="Unpaid">Unpaid</mat-option>
             </mat-select>
@@ -90,14 +94,21 @@
           </button>
         </ng-container>
         <ng-template #viewMode>
-          <button
-            mat-icon-button
-            color="primary"
-            aria-label="Edit"
-            (click)="toggleRowEdit(row)"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
+          <ng-container *ngIf="row.status == 'Paid'">
+            <button mat-icon-button color="primary" aria-label="Edit" disabled>
+              <mat-icon>edit</mat-icon>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="row.status != 'Paid'">
+            <button
+              mat-icon-button
+              color="primary"
+              aria-label="Edit"
+              (click)="toggleRowEdit(row)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </ng-container>
         </ng-template>
       </td>
     </ng-container>

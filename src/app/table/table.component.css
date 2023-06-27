@@ -10,3 +10,8 @@ table {
 .mat-row:hover {
     background-color: #ccc;
 }
+
+.form-field {
+    width: 100%;
+    max-width: 110px;
+}
