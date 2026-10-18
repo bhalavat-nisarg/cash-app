@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { NavbarComponent } from './navbar.component';
 
@@ -8,7 +9,10 @@ describe('NavbarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NavbarComponent]
+      declarations: [NavbarComponent],
+      imports: [MatToolbarModule],
+      errorOnUnknownElements: true,
+      errorOnUnknownProperties: true,
     });
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
