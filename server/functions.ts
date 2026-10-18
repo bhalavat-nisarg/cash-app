@@ -1,4 +1,5 @@
 import { Double, MongoClient, ObjectId } from 'mongodb';
+import type { TransactionData } from '../shared/transactions';
 
 let url = 'mongodb://127.0.0.1:27017/?readPreference=primary&ssl=false';
 
@@ -7,17 +8,13 @@ const dbName = 'cash';
 const dbTxn = 'transactions';
 const dbUser = 'users';
 
-export interface Transactions {
+export interface Transactions extends Omit<
+  TransactionData, '_id' | 'txn_date' | 'base_amount' | 'tax'
+> {
   _id: number;
   txn_date: Date;
-  txn_month: string;
-  txn_type: string;
-  status: string;
   base_amount: Double | number;
   tax: Double | number;
-  sender_id: number;
-  receiver_id: number;
-  payment_mode: string;
 }
 
 export interface Users {
