@@ -1,11 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
-@Component({ selector: 'app-navbar', standalone: false, template: '' })
+@Component({
+  selector: 'app-navbar',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: '',
+})
 class NavbarStubComponent {}
 
-@Component({ selector: 'app-table', standalone: false, template: '' })
+@Component({
+  selector: 'app-table',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: '',
+})
 class TableStubComponent {}
 
 describe('AppComponent', () => {
