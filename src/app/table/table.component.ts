@@ -3,11 +3,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
 
-import { Transactions } from '../../../server/functions';
+import type { TransactionData as Transactions } from '../../../shared/transactions';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
+  standalone: false,
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
@@ -101,7 +102,7 @@ export class TableComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource<Transactions>(this.transactions);
 
   // Set to store row indexes in edit mode
-  editableRows: Set<number> = new Set<number>();
+  editableRows = new Set<Transactions['_id']>();
   transactionForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
@@ -170,9 +171,9 @@ export class TableComponent implements AfterViewInit, OnInit {
     this.toggleRowEdit(row);
   }
 
-  async updateServerRecord(rowIndex: number, rowId: number): Promise<void> {
+  async updateServerRecord(rowIndex: number, rowId: Transactions['_id']): Promise<void> {
     const result = await axios.put(
-      'http://localhost:5000/transactions/' + rowId,
+      'http://localhost:5000/api/transactions/' + rowId,
       this.transactions[rowIndex]
     );
     console.log(result);
