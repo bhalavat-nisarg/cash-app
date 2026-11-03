@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
   standalone: false,
   selector: 'app-table',
   templateUrl: './table.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements AfterViewInit, OnInit {

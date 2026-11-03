@@ -35,12 +35,11 @@ describe('TableComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.autoDetectChanges();
     await fixture.whenStable();
-    fixture.detectChanges();
   });
 
-  it('loads and renders transactions without a live API', () => {
+  it('eagerly renders asynchronous transactions without a live API', () => {
     expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/api/transactions');
     const root: HTMLElement = fixture.nativeElement;
     expect(root.textContent).toContain('12/31/2020');
