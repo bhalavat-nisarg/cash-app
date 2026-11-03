@@ -2,6 +2,20 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.1.
 
+The application now uses the coordinated Angular 21/Material 21/TypeScript 5.9
+toolchain. Use Node.js 22.12 or newer and install with `npm ci`.
+Run `npm run build` and
+`npm test -- --watch=false --browsers=ChromeHeadless` to validate it.
+Tests stub transaction API calls and do not use a live financial database.
+
+### Existing backend limitation
+
+The transaction status endpoint (`PUT /api/transactions/:_id`) currently only
+looks up a record and returns its identifier. It does **not** persist status
+changes. The UI can show an optimistic status change, but a successful response
+must not be treated as confirmation that the change was saved. Backend
+persistence is deliberately outside this toolchain repair.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

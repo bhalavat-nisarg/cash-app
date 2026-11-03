@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, provideZoneChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, TableComponent],
@@ -25,8 +26,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatPaginatorModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatButtonModule,
   ],
-  providers: [],
+  providers: [provideZoneChangeDetection()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

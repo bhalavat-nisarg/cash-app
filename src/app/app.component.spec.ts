@@ -1,27 +1,30 @@
+import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
+@Component({ selector: 'app-navbar', standalone: false, template: '' })
+class NavbarStubComponent {}
+
+@Component({ selector: 'app-table', standalone: false, template: '' })
+class TableStubComponent {}
+
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    declarations: [AppComponent]
+    declarations: [AppComponent, NavbarStubComponent, TableStubComponent],
+    errorOnUnknownElements: true,
+    errorOnUnknownProperties: true,
   }));
 
-  it('should create the app', () => {
+  it('creates the app with its existing title', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(fixture.componentInstance.title).toEqual('cash-app');
   });
 
-  it(`should have as title 'cash-app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('cash-app');
-  });
-
-  it('should render title', () => {
+  it('renders navigation and transactions', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('cash-app app is running!');
+    const root: HTMLElement = fixture.nativeElement;
+    expect(root.querySelector('app-navbar')).not.toBeNull();
+    expect(root.querySelector('app-table')).not.toBeNull();
   });
 });
